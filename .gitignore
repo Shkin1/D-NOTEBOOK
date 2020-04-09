@@ -22,3 +22,6 @@ HELP.md
 /nbdist/
 /.nb-gradle/
 build/
+out/
+.out/*
+target/

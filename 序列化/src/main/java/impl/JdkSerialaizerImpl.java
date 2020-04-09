@@ -1,3 +1,7 @@
+package impl;
+
+import service.ObjectSerializer;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -8,7 +12,6 @@ import java.io.OutputStream;
 
 /**
  * <p>Title: JdkSerialaizer</p>
- * <p>Company:浩鲸云计算科技股份有限公司 </p>
  * <p>Description:
  * 描述：基于Java序列化来实现抽象的序列化接口
  * </p>
@@ -18,6 +21,7 @@ import java.io.OutputStream;
  * @since 2020-04-09 13:46
  */
 public class JdkSerialaizerImpl implements ObjectSerializer {
+
 
     @Override
     public byte[] serialize(Object obj) throws IOException {
@@ -29,13 +33,13 @@ public class JdkSerialaizerImpl implements ObjectSerializer {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
 
-         try {
-             oos.writeObject(obj);
-             oos.flush();
-             return baos.toByteArray();
-         } finally {
-             oos.close();
-         }
+        try {
+            oos.writeObject(obj);
+            oos.flush();
+            return baos.toByteArray();
+        } finally {
+            oos.close();
+        }
     }
 
     @Override
@@ -55,6 +59,7 @@ public class JdkSerialaizerImpl implements ObjectSerializer {
         return (T) this.deserialize(is);
     }
 
+
     @Override
     public Object deserialize(InputStream is) throws IOException, ClassNotFoundException {
         /**
@@ -65,7 +70,7 @@ public class JdkSerialaizerImpl implements ObjectSerializer {
         if (is instanceof ObjectInputStream) {
             ois = (ObjectInputStream) is;
         } else {
-           ois = new ObjectInputStream(is);
+            ois = new ObjectInputStream(is);
         }
         try {
             return ois.readObject();
