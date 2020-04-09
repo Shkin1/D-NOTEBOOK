@@ -22,8 +22,6 @@ import java.io.OutputStream;
  */
 public class JdkSerialaizerImpl implements ObjectSerializer {
 
-
-    @Override
     public byte[] serialize(Object obj) throws IOException {
         /**
          * JDK自带的序列化具体的实现是由ObjectOutputStream完成的
@@ -42,25 +40,21 @@ public class JdkSerialaizerImpl implements ObjectSerializer {
         }
     }
 
-    @Override
     public void serialize(Object obj, OutputStream os) throws IOException {
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(obj);
         oos.flush();
     }
 
-    @Override
     public <T> T deserialize(byte[] bytes, Class<T> clazz) throws IOException, ClassNotFoundException {
         return deserialize(new ByteArrayInputStream(bytes), clazz);
     }
 
-    @Override
     public <T> T deserialize(InputStream is, Class<T> clazz) throws IOException, ClassNotFoundException {
         return (T) this.deserialize(is);
     }
 
 
-    @Override
     public Object deserialize(InputStream is) throws IOException, ClassNotFoundException {
         /**
          * 反序列化的具体实现是由ObjectInputStream完成的
@@ -80,12 +74,10 @@ public class JdkSerialaizerImpl implements ObjectSerializer {
 
     }
 
-    @Override
     public Object deserialize(byte[] bytes) throws IOException, ClassNotFoundException {
         return null;
     }
 
-    @Override
     public <T> T deserialize(byte[] b, T co) throws IOException, ClassNotFoundException {
         return null;
     }
