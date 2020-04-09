@@ -18,7 +18,9 @@ public class TestSerialaizer {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         TestStudent t1 = new TestStudent(110, "student1");
 
+        // JDK序列化
         JdkSerialaizerImpl jdkSerialaizer = new JdkSerialaizerImpl();
+        // Json序列化
         ObjectSerializer jsonSerialaizer = new JsonSerialaizerImpl();
 
         // 测试JDK自带的序列化
