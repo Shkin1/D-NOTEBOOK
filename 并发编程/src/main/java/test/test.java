@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>Title: test</p>
- * <p>Company:浩鲸云计算科技股份有限公司 </p>
+ *
  * <p>Description:
  * 描述：
  * </p>

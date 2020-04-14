@@ -2,7 +2,7 @@ package test;
 
 /**
  * <p>Title: B</p>
- * <p>Company:浩鲸云计算科技股份有限公司 </p>
+ *
  * <p>Description:
  * 描述：
  * </p>
