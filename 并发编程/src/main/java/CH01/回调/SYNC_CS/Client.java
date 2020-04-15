@@ -2,9 +2,9 @@ package CH01.回调.SYNC_CS;
 
 /**
  * <p>Title: Client</p>
- * <p>Company:浩鲸云计算科技股份有限公司 </p>
+ *
  * <p>Description:
- * 描述：同步式回调
+ * 描述：One-by-One式回调, 同步式发送请求
  * </p>
  *
  * @author jinpu.shi
@@ -20,6 +20,8 @@ public class Client implements CallBack {
     }
 
     public void request(final String requestHead){
+        System.out.println("1. 客户端发起请求: "+requestHead);
+        System.out.println();
         server.requestHandler(Client.this, requestHead);
     }
 

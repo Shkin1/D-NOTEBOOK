@@ -1,4 +1,4 @@
-package CH01.回调.SYNC_CS;
+package CH01.回调.ASYNC_CS;
 
 /**
  * <p>Title: CallBack</p>
@@ -18,5 +18,5 @@ public interface CallBack {
      * @param response
      * @return
      */
-    void call (String response);
+    void call(String response);
 }
