@@ -99,7 +99,10 @@ NIO使用了**多路复用器机制**，以socket使用来说，**多路复用�
 ```
 
 通过比较New IO的使用方式我们可以发现，新的IO操作不再面向 Stream来进行操作了，改为了通道Channel，并且使用了更加灵活的缓存区类Buffer，
-Buffer只是缓存区定义接口， 根据需要，我们可以选择对应类型的缓存区实现类。在java NIO编程中，我们需要理解以下3个对象Channel、Buffer和Selector。
+Buffer只是缓存区定义接口， 根据需要，我们可以选择对应类型的缓存区实现类。
+在java NIO编程中，我们需要理解以下3个对象Channel、Buffer和Selector。
+
+- Channel
 
  
  
