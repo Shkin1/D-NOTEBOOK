@@ -156,3 +156,11 @@ AIO方式使用于连接数目多且连接比较长的架构，充分调用OS参
 *https://juejin.im/entry/598da7d16fb9a03c42431ed3*
 
 *https://www.cnblogs.com/binghuaZhang/p/11042835.html*
+
+---
+
+*blog 插眼:*
+
+*https://www.jianshu.com/p/cde27461c226*
+
+*https://juejin.im/book/5b4bc28bf265da0f60130116/section/5b6a1a9cf265da0f87595521*
