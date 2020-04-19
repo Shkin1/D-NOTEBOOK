@@ -1,4 +1,4 @@
-package chatroom.nio.server;
+package com.pushkin.chatroom.nio.server;
 
 /**
  * @author pushkin

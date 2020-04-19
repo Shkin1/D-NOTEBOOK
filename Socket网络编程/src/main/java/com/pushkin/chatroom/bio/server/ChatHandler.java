@@ -1,4 +1,4 @@
-package chatroom.bio.server;
+package com.pushkin.chatroom.bio.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;

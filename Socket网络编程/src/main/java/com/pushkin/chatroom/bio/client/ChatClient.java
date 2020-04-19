@@ -1,4 +1,4 @@
-package chatroom.bio.client;
+package com.pushkin.chatroom.bio.client;
 
 import java.io.*;
 import java.net.Socket;

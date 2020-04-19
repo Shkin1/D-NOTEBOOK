@@ -1,4 +1,4 @@
-package chatroom.bio.server;
+package com.pushkin.chatroom.bio.server;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -24,6 +24,7 @@ public class ChatServer {
 
     public synchronized void addClient(Socket socket) throws IOException {
         if (socket != null) {
+            // 客户端端口
             int port = socket.getPort();
             BufferedWriter writer = new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream())
@@ -33,6 +34,13 @@ public class ChatServer {
         }
     }
 
+    /**
+     * 移除客户端.
+     * 关闭客户端写入流
+     *
+     * @param socket
+     * @throws IOException
+     */
     public synchronized void removeClient(Socket socket) throws IOException {
         if (socket != null) {
             int port = socket.getPort();
@@ -44,6 +52,14 @@ public class ChatServer {
         }
     }
 
+    /**
+     * 转发到其他客户端.
+     * 拿到其他客户端的写入流写入
+     *
+     * @param socket
+     * @param fwdMsg
+     * @throws IOException
+     */
     public synchronized void forwardMessage(Socket socket, String fwdMsg) throws IOException {
         for (Integer id : connectedClients.keySet()) {
             if (!id.equals(socket.getPort())) {
@@ -54,6 +70,12 @@ public class ChatServer {
         }
     }
 
+    /**
+     * 出口
+     *
+     * @param msg
+     * @return
+     */
     public boolean readyToQuit(String msg) {
         return QUIT.equals(msg);
     }

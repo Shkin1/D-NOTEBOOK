@@ -1,4 +1,4 @@
-package chatroom.nio.client;
+package com.pushkin.chatroom.nio.client;
 
 import java.io.Closeable;
 import java.io.IOException;

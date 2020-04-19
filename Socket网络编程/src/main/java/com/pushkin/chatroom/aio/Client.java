@@ -1,4 +1,4 @@
-package chatroom.aio;
+package com.pushkin.chatroom.aio;
 
 import java.io.BufferedReader;
 import java.io.Closeable;
