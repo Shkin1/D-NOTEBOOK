@@ -103,12 +103,54 @@ Buffer只是缓存区定义接口， 根据需要，我们可以选择对应类�
 在java NIO编程中，我们需要理解以下3个对象Channel、Buffer和Selector。
 
 - Channel
+首先说一下Channel，国内大多翻译成“通道”。Channel和IO中的Stream(流)是差不多一个等级的。只不过Stream是单向的，譬如：InputStream, OutputStream。
+而Channel是双向的，既可以用来进行读操作，又可以用来进行写操作，NIO中的Channel的主要实现有：FileChannel、DatagramChannel、SocketChannel、ServerSocketChannel；
+通过看名字就可以猜出个所以然来：分别可以对应文件IO、UDP和TCP（Server和Client）。
+ 
+ 
+- Buffer
+NIO中的关键Buffer实现有：ByteBuffer、CharBuffer、DoubleBuffer、 FloatBuffer、IntBuffer、 LongBuffer,、ShortBuffer，
+分别对应基本数据类型: byte、char、double、 float、int、 long、 short。当然NIO中还有MappedByteBuffer, HeapByteBuffer, DirectByteBuffer等这里先不具体陈述其用法细节。
+ 
+[说一下 DirectByteBuffer 与 HeapByteBuffer 的区别？](./DirectByteBuffer与HeapByteBuffer的区别.md)
+ 
+- Selector
+Selector 是NIO相对于BIO实现多路复用的基础，Selector 运行单线程处理多个 Channel，如果你的应用打开了多个通道，但每个连接的流量都很低，
+使用 Selector 就会很方便。例如在一个聊天服务器中。要使用 Selector , 得向 Selector 注册 Channel，然后调用它的 select() 方法。
+这个方法会一直阻塞到某个注册的通道有事件就绪。一旦这个方法返回，线程就可以处理这些事件，事件的例子有如新的连接进来、数据接收等。
+![1001](./img/1002.png)
+![1001](./img/1003.png)
+![1001](./img/1004.png)
 
- 
- 
- 
+
+这里我们再来看一个NIO模型下的TCP服务器的实现，我们可以看到Selector 正是NIO模型下 TCP Server 实现IO复用的关键，请仔细理解下段代码while循环中的逻辑，见下图：
+![1001](./img/1001.png)
+
+
+
 ### AIO    
 > 异步; 多线程
 
+从编程模式上来看AIO相对于NIO的区别在于，**NIO需要使用者线程不停的轮询IO对象，来确定是否有数据准备好可以读了，而AIO则是在数据准备好之后，才会通知数据使用者**，
+这样使用者就不需要不停地轮询了。当然AIO的异步特性并不是Java实现的伪异步，而是使用了系统底层API的支持，在Unix系统下，采用了epoll IO模型，
+而windows便是使用了IOCP模型。关于Java AIO，本篇只做一个抛砖引玉的介绍，如果你在实际工作中用到了，那么可以参考Netty在高并发下使用AIO的相关技术。
 
-*本文参考博文地址: https://juejin.im/entry/598da7d16fb9a03c42431ed3*
+
+
+## 总结
+
+BIO、NIO、AIO适用场景分析：
+BIO方式适用于连接数目比较小且固定的架构，这种方式对服务器资源要求比较高
+NIO方式适用于连接数目多且连接比较短的架构，可充分利用服务器资源
+AIO方式使用于连接数目多且连接比较长的架构，充分调用OS参与并发操作
+
+
+>总 结:
+>IO实质上与线程没有太多的关系，但是不同的IO模型改变了应用程序使用线程的方式，NIO与AIO的出现解决了很多BIO无法解决的并发问题，当然任何技术抛开适用场景都是耍流氓，复杂的技术往往是为了解决简单技术无法解决的问题而设计的，在系统开发中能用常规技术解决的问题，绝不用复杂技术，否则大大增加系统代码的维护难度，学习IT技术不是为了炫技，而是要实实在在解决问题。
+
+
+---
+
+*本文参考博文地址:*     
+*https://juejin.im/entry/598da7d16fb9a03c42431ed3*
+*https://www.cnblogs.com/binghuaZhang/p/11042835.html*
