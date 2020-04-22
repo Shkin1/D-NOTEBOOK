@@ -4,27 +4,16 @@ package CH00.单例案例;
  * <p>Title: Singleton</p>
  *
  * <p>Description:
- * 描述：
+ * 描述：编译优化带来的有序性问题
  * </p>
  *
+ * 编译器为了优化性能，有时候会改变
+ * 程序中语句的先后顺序，例如程序中：“a=6；b=7；”编译器优化后可能变成“b=7；
+ * a=6；”，在这个例子中，编译器调整了语句的顺序，但是不影响程序的最终结果。不过有
+ * 时候编译器及解释器的优化可能导致意想不到的 Bug
  *
- * 假设有两个线程 A、B 同时调用 getInstance() 方法，他们会同时发现 instance ==
- * null ，于是同时对 Singleton.class 加锁，此时 JVM 保证只有一个线程能够加锁成功（假
- * 设是线程 A），另外一个线程则会处于等待状态（假设是线程 B）；线程 A 会创建一个
- * Singleton 实例，之后释放锁，锁释放后，线程 B 被唤醒，线程 B 再次尝试加锁，此时是
+ * 比如如下的经典案例就是利用双重检查创建单例对象
  *
- * 可以加锁成功的，加锁成功后，线程 B 检查 instance == null 时会发现，已经创建过
- * Singleton 实例了，所以线程 B 不会再创建一个 Singleton 实例。
- * 这看上去一切都很完美，无懈可击，但实际上这个 getInstance() 方法并不完美。问题出在
- * 哪里呢？出在 new 操作上，我们以为的 new 操作应该是：
- *
- * 1. 分配一块内存 M；
- * 2. 在内存 M 上初始化 Singleton 对象；
- * 3. 然后 M 的地址赋值给 instance 变量。
- * 但是实际上优化后的执行路径却是这样的：
- * 1. 分配一块内存 M；
- * 2. 将 M 的地址赋值给 instance 变量；
- * 3. 最后在内存 M 上初始化 Singleton 对象
  *
  *
  * 优化后会导致什么问题呢？我们假设线程 A 先执行 getInstance() 方法，当执行完指令 2
@@ -55,6 +44,29 @@ public class Singleton {
         if (instance == null) {
             synchronized (Singleton.class) {
                 if (instance == null) {
+                    /**
+                     *
+                     *
+                     * 注意此处实际的的执行路径:
+                     * 1. 分配一块内存
+                     * 2. 将M的地址赋值给instance变量  *******(内存先指向引用的变量, 再实例化对象)
+                     * 3. 最后将内存M上初始化Singleton对象
+                     *
+                     * 而不是我们以为的:
+                     * 1. 分配一块内存
+                     * 2. 在内存 M 上初始化 Singleton 对象； *******(内存例化对象, 再指向引用变量)
+                     * 3. 然后 M 的地址赋值给 instance 变量。
+                     *
+                     *
+                     * 这就可能造成空指针问题:
+                     * 比如当线程 A 先执行getInstance(), 当执行到第二步时 正好发生线程切换
+                     * 切换到 B 上; 如果此时 B 也在执行getInstance(), 那么在执行第一个判断是
+                     * 会发现 instance != null, 所以直接返回 instance
+                     * 而此时的instance是没有初始化过的, 如果此时我们访问instance的成员变量就可能触发
+                     * 空指针异常了
+                     *
+                     * 如果对instance进行volatile语义声明 ，就可以禁止指令重排序，避免该情况发生。
+                     */
                     instance = new Singleton();
                 }
             }
