@@ -16,6 +16,13 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class BlockedQueue {
 
+    // notFull  不满锁,  如果队列已满, 就释放锁, 等到队列不满(信号) [出队的话 就不满];   入队 通知notEmpty线程不用阻塞 可以取数(信号)了
+    // notEmpty 不空锁,  如果队列已空, 就释放锁, 等到队列不空(信号) [入队的话 就不空];   出队 通知notFull线程不用阻塞  可以装数(信号)了
+
+    // 核心就是:  阻塞(释放锁) + 通知信号
+    // 用同一把锁, 锁同一个不共享变量 的不同操作!
+
+
     final ReentrantLock lock = new ReentrantLock();
     final Condition notFull = lock.newCondition();
     final Condition notEmpty = lock.newCondition();
@@ -70,6 +77,43 @@ public class BlockedQueue {
         finally {
             lock.unlock();
         }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        BlockedQueue blockedQueue = new BlockedQueue();
+
+        for (int j = 0; j < 10; j++) {
+            new Thread(()->{
+
+                for (int i = 0; i < 10; i++) {
+                    try {
+                        blockedQueue.put(i);
+                        System.out.println(Thread.currentThread().getName()+"入队: "+i);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            new Thread(()-> {
+                for (int i = 0; i < 10; i++) {
+                    try {
+                        Object take = blockedQueue.take();
+                        System.out.println(Thread.currentThread().getName()+"出队: "+take);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }).start();
+
+
+        }
+
+
+
     }
 
 }
