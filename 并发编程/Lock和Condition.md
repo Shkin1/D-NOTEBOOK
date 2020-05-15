@@ -16,7 +16,13 @@ java语言提的synchronized也是管程的实现,既然java已经从语言层�
 
 
 JDK1.5 synchronized性能不如LOCK
+
 JDK1.6 synchronized性能优于LOCK
+
+Lock有别与synchronized隐式锁的三个特性: 
+- 响应中断
+- 支持超时
+- 非阻塞获取锁
 
 ### 1.1 死锁问题_破坏不可抢占条件方案
 这个方案synchronized没有办法解决, 因为其在申请资源的时候, 如果申请不到, 线程直接进入阻塞状态了,
