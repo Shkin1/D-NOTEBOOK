@@ -29,15 +29,17 @@ public class NettyClient {
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
                     protected void initChannel(Channel ch) {
+                        // 指定连接数据读写逻辑
                         ch.pipeline().addLast(new StringEncoder());
+                        ch.pipeline().addLast(new FirstClientHandler());
                     }
                 });
 
         Channel channel = bootstrap.connect("127.0.0.1", 8000).channel();
 
         while (true) {
-            channel.writeAndFlush(new Date() + ": hello world!");
-            Thread.sleep(2000);
+            channel.writeAndFlush(new Date() + ": 心跳监测!");
+            Thread.sleep(3000);
         }
     }
 }

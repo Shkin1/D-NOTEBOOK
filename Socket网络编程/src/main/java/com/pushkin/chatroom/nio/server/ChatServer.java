@@ -8,6 +8,9 @@ import java.nio.channels.*;
 import java.nio.charset.Charset;
 import java.util.Set;
 
+/**
+ * @author shijp
+ */
 public class ChatServer implements ServerInter{
 
     private static final int DEFAULT_PORT = 8888;
