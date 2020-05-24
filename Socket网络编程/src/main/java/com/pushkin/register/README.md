@@ -9,7 +9,9 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.pushkin.regis
 
 
 
-提供者项目配置文件:
+
+1. 添加注册中心的依赖
+2. 提供者项目配置文件:
 server.port=9100
 spring.application.name=spring-cloud-service-provider
 spring.registry.zookeeper.address=127.0.0.1:2181
