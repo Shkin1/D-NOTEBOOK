@@ -65,7 +65,7 @@ public class IRegistryCenterImpl implements IRegistryCenter {
             }
 
             // 创建服务节点
-            String serviceNode = serviceName + serviceAddress;
+            String serviceNode = Constants.REGISTRY + "/" + serviceName + "/" + serviceAddress;
             curatorFramework.create()
                     .creatingParentsIfNeeded()
                     // 临时节点
