@@ -1,6 +1,15 @@
 https://www.acfun.cn/v/ac13837146_3
 
 
+
+pom: 
+还得配置
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+        </dependency>
+否则com.pushkin.register.autoconfig.RegistryAutoConfiguration会报spring Boot configuration annotation processor not configured
+
 注意不要忘记此文件
 META-INF/spring.factories
 指定自动配置的类

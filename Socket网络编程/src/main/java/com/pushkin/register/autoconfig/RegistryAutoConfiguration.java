@@ -21,7 +21,7 @@ import java.util.List;
  * @version v1.0.0
  * @date 2020/5/24 22:29
  * <p>
- *      自动化配置类
+ *      自动化配置类, 别人依赖时,只要一启动便会直接注册/发现
  *
  * Modification History:
  * Date         Author          Version            Description
@@ -41,6 +41,8 @@ public class RegistryAutoConfiguration {
 
     /**
      * 当这个对象被spring注入后,自动执行初始化
+     *
+     * (PostConstruct: bean初始化完成后,就会执行此方法)
      *
      * 注册中心的初始化: 服务注册 或者 服务发现
      *
@@ -70,6 +72,7 @@ public class RegistryAutoConfiguration {
         } else {
             // 客户端 -> 服务消费者 -> 服务发现
             List<String> serviceList = registryCenter.discoveryService(zkAddress, serviceName);
+            // 放入容器之中
             registryCenterContext(serviceList);
         }
     }
