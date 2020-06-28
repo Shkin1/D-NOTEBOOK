@@ -5,6 +5,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.RetryNTimes;
 import org.apache.zookeeper.CreateMode;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * Date         Author          Version            Description
  * ------------------------------------------------------------
  */
-
+@Service
 public class IRegistryCenterImpl implements IRegistryCenter {
 
     public CuratorFramework curatorFramework = null;
