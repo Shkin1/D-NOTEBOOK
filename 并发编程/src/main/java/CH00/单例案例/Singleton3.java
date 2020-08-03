@@ -10,13 +10,12 @@ package CH00.单例案例;
  * @version v1.0.0
  * @since 2020-04-22 09:57
  */
-public class Singleton3 {
-
+public final class Singleton3 {
+    /** 可见volatile */
     private static volatile Singleton3 instance = null;
-
     private Singleton3() {
     }
-
+    /** 双重校验 */
     public static Singleton3 getInstance() {
         if (instance == null) {
             synchronized (Singleton3.class) {
